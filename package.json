@@ -1,0 +1,9 @@
+{
+  "name": "@gros/visualization-ui",
+  "version": "0.0.1",
+  "description": "Common visualization fragments.",
+  "author": "Leon Helwerda <l.s.helwerda@liacs.leidenuniv.nl>",
+  "dependencies": {
+    "d3": "^4.8.0"
+  }
+}
