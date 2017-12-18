@@ -3,6 +3,14 @@
   "version": "0.0.2",
   "description": "Common visualization fragments.",
   "author": "Leon Helwerda <l.s.helwerda@liacs.leidenuniv.nl>",
+  "files": [
+    "lib/*.js",
+    "index.js",
+    "README.md"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "postversion": "git push && git push --tags"
   },
