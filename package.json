@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Common visualization fragments.",
   "author": "Leon Helwerda <l.s.helwerda@liacs.leidenuniv.nl>",
+  "scripts": {
+    "postversion": "git push && git push --tags"
+  },
   "dependencies": {
     "d3": "^4.8.0"
   }
