@@ -44,7 +44,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'npm publish --registry $NPM_REGISTRY'
+                withCredentials([file(credentialsId: 'npm-auth', variable: 'NPM_CONFIG_USERCONFIG')]) {
+                    sh 'npm publish --registry $NPM_REGISTRY'
+                }
             }
         }
         stage('Status') {
