@@ -23,18 +23,6 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:6'
-                    reuseNode true
-                }
-            }
-            steps {
-                updateGitlabCommitStatus name: env.JOB_NAME, state: 'running'
-                sh 'npm install .'
-            }
-        }
         stage('Push') {
             when { branch 'master' }
             agent {
@@ -44,6 +32,7 @@ pipeline {
                 }
             }
             steps {
+                updateGitlabCommitStatus name: env.JOB_NAME, state: 'running'
                 withCredentials([file(credentialsId: 'npm-auth', variable: 'NPM_CONFIG_USERCONFIG')]) {
                     sh 'npm publish --registry $NPM_REGISTRY'
                 }
