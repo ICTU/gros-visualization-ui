@@ -1,7 +1,8 @@
 {
   "name": "@gros/visualization-ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Common visualization fragments.",
+  "license": "Apache-2.0",
   "author": "Leon Helwerda <l.s.helwerda@liacs.leidenuniv.nl>",
   "files": [
     "lib/*.js",
@@ -11,10 +12,18 @@
   "directories": {
     "lib": "lib"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ICTU/gros-visualization-ui"
+  },
+  "homepage": "https://github.com/ICTU/gros-visualization-ui",
+  "bugs": {
+    "url": "https://github.com/ICTU/gros-visualization-ui/issues"
+  },
   "scripts": {
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
-    "d3": "^4.8.0"
+    "d3": "^4.12.0"
   }
 }

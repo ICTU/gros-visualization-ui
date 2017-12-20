@@ -5,12 +5,8 @@ visualization based on [Data-Driven Documents](https://d3js.org/).
 
 ## Installation
 
-Optionally, configure the NPM registry to use for this package's scope, 
-`@gros`, according to 
-[npm-scope](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry).
-
-Install the fragments using `npm install --save`, then use them in your 
-visualization sources with
+Install the fragments using `npm install --save @gros/visualization-ui`, then 
+use them in your visualization sources with
 ```js
 import {navigation, spinner} from '@gros/visualization-ui';
 ```
@@ -64,3 +60,7 @@ loadingSpinner.start();
 
 loadingSpinner.stop();
 ```
+
+## License
+
+The visualization fragments library is licensed under the Apache 2.0 License.
