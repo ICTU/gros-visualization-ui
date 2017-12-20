@@ -17,12 +17,19 @@ supports rewriting ES2015 or later syntax.
 
 ## Overview
 
-The library provides two objects: `navigation` and `spinner`.
+The library provides two objects: `navigation` and `spinner`. These objects 
+must be instantiated with `new` and can be provided an object of configuration 
+options. All modules have the option `container` which defines a query selector 
+for an element to insert the fragment into.
 
 ### Navigation
 
-Create a navigation bar to switch between view for different projects. The URL 
-state is changed via the location hash, which is also checked on startup.
+Create a navigation bar to switch between view for different selections. The 
+URL state is changed via the location hash, which is also checked on startup.
+Multiple navigation objects can exist concurrently if a unique `prefix` is 
+given to each of them. By default, the first item in the navigation is 
+selected, but this can be overridden by returning `true` in `setCurrentItem`, 
+in which case nothing is selected if an unknown location hash is set at start.
 
 Setup:
 
@@ -30,16 +37,25 @@ Setup:
 const projectsList = ['BAR', 'BAZ', 'FOO'];
 const projectsNavigation = new navigation({
     container: '#navigation',
-    setCurrentProject: (project, hasProject) => {
+    prefix: 'project_',
+    setCurrentItem: (project, hasProject) => {
         if (!hasProject) {
-            console.log('A non-project was selected: ' + project);
+            console.log('An unknown project was selected: ' + project);
         }
-        console.log('Selected project: ' + project);
+        else {
+            console.log('Selected project: ' + project);
+        }
+        return hasProject;
+    },
+    addElement: (element) => {
+        element.text(d => `Project ${d}`);
     }
 })
 projectsNavigation.start(projectsList);
 
-location.hash = '#FOO';
+location.hash = '#project_FOO'; // Select the third project
+location.hash = '#FOO'; // Not handled
+location.hash = '#project_QUX'; // Unknown project selected
 ```
 
 ### Spinner
