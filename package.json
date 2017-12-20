@@ -10,7 +10,8 @@
     "README.md"
   ],
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "test": "tests"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,18 @@
     "url": "https://github.com/ICTU/gros-visualization-ui/issues"
   },
   "scripts": {
+    "pretest": "cross-env NODE_ENV=production webpack --hide-modules",
+    "test": "cross-env NODE_ENV=development mocha tests",
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "d3": "^4.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "cross-env": "^5.1.1",
+    "jsdom": "^11.5.1",
+    "mocha": "^4.0.1",
+    "webpack": "^3.10.0"
   }
 }
