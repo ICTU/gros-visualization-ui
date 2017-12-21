@@ -1,5 +1,9 @@
 # Common visualization UI fragments
 
+[![npm](https://img.shields.io/npm/v/@gros/visualization-ui.svg)](https://www.npmjs.com/package/@gros/visualization-ui)
+[![Build 
+Status](https://travis-ci.org/ICTU/gros-visualization-ui.svg?branch=master)](https://travis-ci.org/ICTU/gros-visualization-ui)
+
 This library contains a number of user interface fragments to be used in 
 visualization based on [Data-Driven Documents](https://d3js.org/).
 
@@ -76,6 +80,16 @@ loadingSpinner.start();
 
 loadingSpinner.stop();
 ```
+
+## Development
+
+- The repository can be found on 
+  [GitHub](https://github.com/ICTU/gros-visualization-ui).
+- [Travis](https://travis-ci.org/ICTU/gros-visualization-ui) is used to run 
+  unit tests.
+- You can perform local tests using `npm test`.
+- We publish releases to 
+  [npm](https://www.npmjs.com/package/@gros/visualization-ui).
 
 ## License
 
