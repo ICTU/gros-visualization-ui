@@ -168,4 +168,14 @@ describe('Spinner', () => {
         assert.isFalse(d3.select("svg#loader").empty(), 'Spinner has SVG');
         done();
     });
+    it('Creates at most one spinner', (done) => {
+        const { window, d3, spinner } = setup('<div id="loader_container"></div>', done);
+        const loadingSpinner = new spinner();
+        loadingSpinner.start();
+        loadingSpinner.start();
+        assert.equal(d3.selectAll("svg#loader").size(), 1);
+        loadingSpinner.stop();
+        assert.isTrue(d3.select("svg#loader").empty(), 'Spinner is removed');
+        done();
+    });
 });
