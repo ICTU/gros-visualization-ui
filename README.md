@@ -12,7 +12,7 @@ visualization based on [Data-Driven Documents](https://d3js.org/).
 Install the fragments using `npm install --save @gros/visualization-ui`, then 
 use them in your visualization sources with
 ```js
-import {navigation, spinner} from '@gros/visualization-ui';
+import {locale, navigation, spinner} from '@gros/visualization-ui';
 ```
 
 This requires that your visualization is built via 
@@ -21,10 +21,46 @@ supports rewriting ES2015 or later syntax.
 
 ## Overview
 
-The library provides two objects: `navigation` and `spinner`. These objects 
-must be instantiated with `new` and can be provided an object of configuration 
-options. All modules have the option `container` which defines a query selector 
-for an element to insert the fragment into.
+The library provides three objects: `locale`, `navigation` and `spinner`. These 
+objects must be instantiated with `new` and can be provided an object of 
+configuration options. All modules have the option `container` which defines 
+a query selector for an element to insert the fragment into.
+
+### Locale
+
+Create a localization object to provide translated messages and attributes of 
+a selected locale. For this purpose, the object must be instantiated with an 
+object containing locale-specific attribute objects, with language codes as 
+keys of the encompassing object. The attribute objects should have the same 
+keys as each other, where `"messages"` plays a special role; it must be an 
+object containing message keys and raw output or sprintf-compatible format 
+strings. Also, `"language"` must provide a human-readable description of the 
+locale in its own language.
+
+The localization object can select a different language at any time, and can be 
+queried for any attribute or message from the locale object. Additionally, it 
+can generate a navigation list for selecting a different language (but it does
+not handle the selection change event itself), and it can automatically replace 
+elements with a `data-message` attribute in the document or a certain selection 
+with their locale equivalent, using the element children as arguments.
+
+Setup:
+
+```js
+import * as d3 from 'd3';
+import spec from './locales.json';
+const locales = new locale(spec, lang="en");
+// Select locale from query string
+locales.select(URLSearchParams(window.location.search).get("lang"));
+
+console.log(locales.message("test"));
+console.log(locales.message("format", [3, 'baz']));
+// Replace all messages in document
+locales.updateMessages();
+
+// Generate navigation
+locales.generateNavigation(d3.select("nav.languages"), "index.html", "lang");
+```
 
 ### Navigation
 

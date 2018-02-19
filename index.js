@@ -16,7 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import locale from './lib/locale';
 import navigation from './lib/navigation';
 import spinner from './lib/spinner';
 
-export { navigation, spinner };
+export { locale, navigation, spinner };

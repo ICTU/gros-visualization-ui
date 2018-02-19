@@ -49,11 +49,11 @@ function setup(body, done) {
     const d3window = d3.select(dom.window.document);
 
     // Run the script to acquire the module components.
-    const { navigation, spinner } = dom.runVMScript(bundleScript);
+    const { locale, navigation, spinner } = dom.runVMScript(bundleScript);
 
     currentWindow = dom.window;
 
-    return { window: dom.window, d3: d3window, navigation, spinner };
+    return { window: dom.window, d3: d3window, locale, navigation, spinner };
 }
 
 afterEach(() => {
@@ -62,6 +62,62 @@ afterEach(() => {
         currentWindow.close();
         currentWindow = null;
     }
+});
+
+describe('Locale', () => {
+    it('Selects locales', (done) => {
+        const specs = require('./locales.json');
+        const { d3, locale } = setup('', done);
+        const locales = new locale(specs);
+
+        assert.equal(locales.specs, specs);
+        assert.equal(locales.selectedLocale, specs.en);
+
+        assert.equal(locales.message("test"), "This is a test.");
+        assert.equal(locales.message("format", [4, "foo"]),
+                                     "We have 4 things of type 'foo'.");
+        assert.equal(locales.attribute("attribute", "x"), "one");
+        assert.equal(locales.get("prop"), "value");
+
+        locales.select("nl");
+        assert.equal(locales.selectedLocale, specs.nl);
+
+        assert.equal(locales.message("test"), "Dit is een test.");
+        assert.equal(locales.message("format", [2, "bar"]),
+                                     "We hebben 2 dingen van het type 'bar'.");
+        assert.equal(locales.attribute("attribute", "x"), "een");
+        assert.equal(locales.get("prop"), "waarde");
+
+        done();
+    });
+    it('Generates navigation', (done) => {
+        const specs = require('./locales.json');
+        const { d3, locale } = setup('<div id="languages"></div>', done);
+        const locales = new locale(specs, "nl");
+        locales.generateNavigation("#languages");
+        const items = d3.selectAll("#languages ul li");
+        assert.equal(items.size(), 2);
+        const first = items.filter(":nth-child(1)").select('a');
+        assert.equal(first.attr('href'), '?en');
+        assert.equal(first.attr('hreflang'), 'en');
+        assert.equal(first.text(), 'English');
+        assert.isFalse(items.filter(":nth-child(1)").classed("is-active"));
+        const second = items.filter(":nth-child(2)").select('a');
+        assert.equal(second.attr('href'), '?nl');
+        assert.equal(second.attr('hreflang'), 'nl');
+        assert.equal(second.text(), 'Nederlands');
+        assert.isTrue(items.filter(":nth-child(2)").classed("is-active"));
+        done();
+    });
+    it('Replaces messages', (done) => {
+        const specs = require('./locales.json');
+        const { window, d3, locale } = setup('<p data-message="test"></p><div data-message="replace"><span>5</span> <span>qux</span></div>', done);
+        const locales = new locale(specs, "en");
+        locales.updateMessages();
+        assert.equal(d3.select("p").text(), "This is a test.");
+        assert.equal(d3.select("div").html(), `There are <span>5</span> pens on the table, owned by <span>qux</span>.`);
+        done();
+    });
 });
 
 describe('Navigation', () => {
