@@ -22,9 +22,11 @@ supports rewriting ES2015 or later syntax.
 ## Overview
 
 The library provides three objects: `locale`, `navigation` and `spinner`. These 
-objects must be instantiated with `new` and can be provided an object of 
-configuration options. All modules have the option `container` which defines 
-a query selector for an element to insert the fragment into.
+objects must be instantiated with `new`. All modules can be provided an object, 
+which is provides configuration options for the fragment except for `locale` 
+where it provides localaliation specifications. All modules except for `locale` 
+have the option `container` which defines a query selector for an element to 
+insert the fragment into.
 
 ### Locale
 
@@ -123,7 +125,9 @@ loadingSpinner.stop();
   [GitHub](https://github.com/ICTU/gros-visualization-ui).
 - [Travis](https://travis-ci.org/ICTU/gros-visualization-ui) is used to run 
   unit tests.
-- You can perform local tests using `npm test`.
+- You can perform local tests using `npm test`. This requires the source code
+  repository for the test suite and installing the development dependencies,
+  using `npm install` in the cloned repository directory.
 - We publish releases to 
   [npm](https://www.npmjs.com/package/@gros/visualization-ui).
 
