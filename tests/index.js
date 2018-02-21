@@ -69,22 +69,40 @@ describe('Locale', () => {
         const specs = require('./locales.json');
         const { d3, locale } = setup('', done);
         const locales = new locale(specs);
+        const extraSpecs = {
+            en: {
+                remote: "external"
+            },
+            nl: {
+                remote: "extern"
+            }
+        };
 
         assert.equal(locales.specs, specs);
+        assert.equal(locales.lang, "en");
         assert.equal(locales.selectedLocale, specs.en);
 
         assert.equal(locales.message("test"), "This is a test.");
         assert.equal(locales.message("format", [4, "foo"]),
                                      "We have 4 things of type 'foo'.");
         assert.equal(locales.attribute("attribute", "x"), "one");
+        assert.equal(locales.retrieve(extraSpecs, "remote"), "external");
+        assert.equal(locales.retrieve({en: "Yes", nl: "Ja"}), "Yes");
         assert.equal(locales.get("prop"), "value");
 
+        locales.select("nonexistent");
+        assert.equal(locales.lang, "en");
+        assert.equal(locales.selectedLocale, specs.en);
+
         locales.select("nl");
+        assert.equal(locales.lang, "nl");
         assert.equal(locales.selectedLocale, specs.nl);
 
         assert.equal(locales.message("test"), "Dit is een test.");
         assert.equal(locales.message("format", [2, "bar"]),
                                      "We hebben 2 dingen van het type 'bar'.");
+        assert.equal(locales.retrieve(extraSpecs, "remote"), "extern");
+        assert.equal(locales.retrieve({en: "Yes", nl: "Ja"}), "Ja");
         assert.equal(locales.attribute("attribute", "x"), "een");
         assert.equal(locales.get("prop"), "waarde");
 
