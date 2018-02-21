@@ -85,7 +85,9 @@ describe('Locale', () => {
         assert.equal(locales.message("test"), "This is a test.");
         assert.equal(locales.message("format", [4, "foo"]),
                                      "We have 4 things of type 'foo'.");
+        assert.equal(locales.message("missing", [1, 2]), "missing(1,2)");
         assert.equal(locales.attribute("attribute", "x"), "one");
+        assert.equal(locales.attribute("nothere", "temp"), "temp");
         assert.equal(locales.retrieve(extraSpecs, "remote"), "external");
         assert.equal(locales.retrieve({en: "Yes", nl: "Ja"}), "Yes");
         assert.equal(locales.get("prop"), "value");
