@@ -1,2 +1,10 @@
+*~
+.#*
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.bak
 node_modules
 dist/
