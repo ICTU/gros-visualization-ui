@@ -44,7 +44,9 @@ queried for any attribute or message from the locale object. Additionally, it
 can generate a navigation list for selecting a different language (but it does
 not handle the selection change event itself), and it can automatically replace 
 elements with a `data-message` attribute in the document or a certain selection 
-with their locale equivalent, using the element children as arguments.
+with their locale equivalent, using the element children as arguments. It can 
+also replace attributes of elements when they are prefixed with `data-message-` 
+and their attribute name is explicitly provided.
 
 Setup:
 
@@ -59,6 +61,13 @@ console.log(locales.message("test"));
 console.log(locales.message("format", [3, 'baz']));
 // Replace all messages in document
 locales.updateMessages();
+
+// Replace all messages in a selection
+locales.updateMessages(d3.select("#content"));
+
+// Replace all messages in the document, including specific attributes
+// (data-message-title and data-message-alt, in this example).
+locales.updateMessages(d3.selection(), ["title", "alt"]);
 
 // Generate navigation
 locales.generateNavigation(d3.select("nav.languages"), "index.html", "lang");

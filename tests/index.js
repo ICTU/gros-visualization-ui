@@ -131,11 +131,11 @@ describe('Locale', () => {
     });
     it('Replaces messages', (done) => {
         const specs = require('./locales.json');
-        const { window, d3, locale } = setup('<p data-message="test"></p><div data-message="replace"><span>5</span> <span>qux</span></div>', done);
+        const { window, d3, locale } = setup('<p data-message="test"></p><div data-message="replace"><span class="count" data-message-title="number">5</span> <span data-message="owner">UUU</span></div>', done);
         const locales = new locale(specs, "en");
-        locales.updateMessages();
+        locales.updateMessages(d3, ['title']);
         assert.equal(d3.select("p").text(), "This is a test.");
-        assert.equal(d3.select("div").html(), `There are <span>5</span> pens on the table, owned by <span>qux</span>.`);
+        assert.equal(d3.select("div").html(), `There are <span class="count" data-message-title="number" title="Count">5</span> pens on the table, owned by <span data-message="owner">the owner</span>.`);
         done();
     });
 });

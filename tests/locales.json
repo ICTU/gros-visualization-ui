@@ -7,6 +7,8 @@
             "y": "two"
         },
         "messages": {
+            "number": "Count",
+            "owner": "the owner",
             "test": "This is a test.",
             "format": "We have %d things of type '%s'.",
             "replace": "There are %s pens on the table, owned by %s."
@@ -20,6 +22,8 @@
             "y": "twee"
         },
         "messages": {
+            "number": "Aantal",
+            "owner": "de eigenaar",
             "test": "Dit is een test.",
             "format": "We hebben %d dingen van het type '%s'.",
             "replace": "Er liggen %s pennen op de tafel van %s."
