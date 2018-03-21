@@ -1,0 +1,98 @@
+[
+    {
+        "type": "brand",
+        "items": [
+            {
+                "type": "link",
+                "url": {"config": "my_url"},
+                "title": {
+                    "en": "Page",
+                    "nl": "Pagina"
+                },
+                "content": [
+                    {
+                        "type": "image",
+                        "url": "logo.svg",
+                        "alt": {
+                            "en": "Brand",
+                            "nl": "Merk"
+                        },
+                        "width": 28,
+                        "height": 28
+                    },
+                    {
+                        "type": "text",
+                        "text": "\u00A0TEST"
+                    }
+                ]
+            },
+            {
+                "type": "burger",
+                "target": "menu-content",
+                "lines": 3
+            }
+        ]
+    },
+    {
+        "type": "menu",
+        "id": "menu-content",
+        "items": [
+            {
+                "type": "start",
+                "items": [
+                    {
+                        "type": "dropdown",
+                        "link": {
+                            "url": {"config": "my_url"},
+                            "content": {
+                                "en": "Contents",
+                                "nl": "Inhoud"
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "link",
+                                "url": "one",
+                                "icon": ["fas", "align-center"],
+                                "content": {
+                                    "en": "One",
+                                    "nl": "Een"
+                                }
+                            },
+                            {
+                                "type": "link",
+                                "url": "two",
+                                "icon": ["far", "circle"],
+                                "content": {
+                                    "en": "Two",
+                                    "nl": "Twee"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "end",
+                "items": [
+                    {
+                        "type": "link",
+                        "url": "https://example.com",
+                        "title": {
+                            "en": "Example",
+                            "nl": "Voorbeeld"
+                        },
+                        "content": [
+                            {
+                                "type": "image",
+                                "url": "example.svg",
+                                "width": 50,
+                                "height": 24
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

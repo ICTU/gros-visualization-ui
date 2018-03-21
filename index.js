@@ -17,7 +17,8 @@ limitations under the License.
 */
 
 import locale from './lib/locale';
+import navbar from './lib/navbar';
 import navigation from './lib/navigation';
 import spinner from './lib/spinner';
 
-export { locale, navigation, spinner };
+export { locale, navbar, navigation, spinner };

@@ -49,11 +49,13 @@ function setup(body, done) {
     const d3window = d3.select(dom.window.document);
 
     // Run the script to acquire the module components.
-    const { locale, navigation, spinner } = dom.runVMScript(bundleScript);
+    const { locale, navbar, navigation, spinner } = dom.runVMScript(bundleScript);
 
     currentWindow = dom.window;
 
-    return { window: dom.window, d3: d3window, locale, navigation, spinner };
+    return {
+        window: dom.window, d3: d3window, locale, navbar, navigation, spinner
+    };
 }
 
 afterEach(() => {
@@ -139,6 +141,59 @@ describe('Locale', () => {
         locales.updateMessages(d3, ['title']);
         assert.equal(d3.select("p").text(), "This is a test.");
         assert.equal(d3.select("div").html(), `There are <span class="count" data-message-title="number" title="Count">5</span> pens on the table, owned by <span data-message="owner">the owner</span>.`);
+        done();
+    });
+});
+
+describe('Navigation bar', () => {
+    it('Builds navigation', (done) => {
+        const specs = require('./locales.json');
+        const structure = require('./navbar.json');
+        const { d3, locale, navbar } = setup('<div id="navbar"></div>', done);
+        const locales = new locale(specs);
+        const config = {"my_url": "http://localhost"};
+        const nav = new navbar(config, locales);
+        //console.log(nav.build(structure));
+        const elm = d3.select('#navbar');
+        nav.fill(elm, structure);
+        const brand = elm.select('.navbar-brand');
+        const logo = brand.select('a.navbar-item');
+        assert.equal(logo.attr('href'), 'http://localhost');
+        assert.equal(logo.attr('title'), 'Page');
+        const img = logo.select('img');
+        assert.equal(img.attr('src'), 'logo.svg');
+        assert.equal(img.attr('alt'), 'Brand');
+        assert.equal(img.attr('width'), '28');
+        assert.equal(img.attr('height'), '28');
+
+        const burger = brand.select('.navbar-burger');
+        assert.equal(burger.attr('data-target'), 'menu-content');
+        assert.equal(burger.selectAll('span').size(), 3);
+
+        const menu = elm.select('.navbar-menu');
+        assert.equal(menu.attr('id'), 'menu-content');
+        const item = menu.select('.navbar-start .navbar-item');
+        const link = item.select('.navbar-link');
+        assert.equal(link.attr('href'), 'http://localhost');
+        assert.equal(link.text().trim(), 'Contents');
+        const items = item.selectAll('.navbar-dropdown a.navbar-item');
+        assert.equal(items.size(), 2);
+        assert.equal(items.filter(':nth-child(1)').attr('href'), 'one');
+        assert.equal(items.filter(':nth-child(1)').text().trim(), 'One');
+        assert.equal(items.filter(':nth-child(1)').select('.icon i').attr('class'), 'fas fa-align-center');
+
+        assert.equal(items.filter(':nth-child(2)').attr('href'), 'two');
+        assert.equal(items.filter(':nth-child(2)').text().trim(), 'Two');
+        assert.equal(items.filter(':nth-child(2)').select('.icon i').attr('class'), 'far fa-circle');
+
+        const end = menu.select('.navbar-end a.navbar-item');
+        assert.equal(end.attr('href'), 'https://example.com');
+        assert.equal(end.attr('title'), 'Example');
+        const example = end.select('img');
+        assert.equal(example.attr('src'), 'example.svg');
+        assert.equal(example.attr('width'), '50');
+        assert.equal(example.attr('height'), '24');
+
         done();
     });
 });

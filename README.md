@@ -12,7 +12,7 @@ visualization based on [Data-Driven Documents](https://d3js.org/).
 Install the fragments using `npm install --save @gros/visualization-ui`, then 
 use them in your visualization sources with
 ```js
-import {locale, navigation, spinner} from '@gros/visualization-ui';
+import {locale, navbar, navigation, spinner} from '@gros/visualization-ui';
 ```
 
 This requires that your visualization is built via 
@@ -21,12 +21,14 @@ supports rewriting ES2015 or later syntax.
 
 ## Overview
 
-The library provides three objects: `locale`, `navigation` and `spinner`. These 
-objects must be instantiated with `new`. All modules can be provided an object, 
-which is provides configuration options for the fragment except for `locale` 
-where it provides localaliation specifications. All modules except for `locale` 
-have the option `container` which defines a query selector for an element to 
-insert the fragment into.
+The library provides four objects: `locale`, `navbar`, `navigation` and 
+`spinner`. These objects must be instantiated with `new`. All modules can be 
+provided an object upon construction, which is provides configuration options 
+for the fragment except for `locale` where it provides localaliation 
+specifications. All modules except for `locale` and `navbar` have the option 
+`container` which defines a query selector for an element to insert the 
+fragment into. In the `navbar`, the locale can be passed separately upon 
+construction and the selection is to be provided to a method call.
 
 ### Locale
 
@@ -73,10 +75,30 @@ locales.updateMessages(d3.selection(), ["title", "alt"]);
 locales.generateNavigation(d3.select("nav.languages"), "index.html", "lang");
 ```
 
+### Navigation bar
+
+Create a horizontal navigation heading to provide a branding, menus and other 
+accessibility links. The navigation bar structure is defined by nested objects 
+and arrays, and optionally configuration and locale sources. The structure is 
+optimized to define a navigation heading with items, links, icons, but also 
+branding, burger and other sections.
+
+Setup:
+
+```
+const nav = new navbar({
+    "my_url": "https://example.com"
+}, locales);
+nav.fill(d3.select('#navbar'), structure);
+```
+
+See `tests/navbar.json` for an example structure.
+
 ### Navigation
 
-Create a navigation bar to switch between view for different selections. The 
-URL state is changed via the location hash, which is also checked on startup.
+Create a horizontal navigation list to switch between views for different 
+selections. The URL state is changed via the location hash, which is also 
+checked on startup.
 Multiple navigation objects can exist concurrently if a unique `prefix` is 
 given to each of them. By default, the first item in the navigation is 
 selected, but this can be overridden by returning `true` in `setCurrentItem`, 
