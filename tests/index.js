@@ -151,11 +151,17 @@ describe('Navigation bar', () => {
         const structure = require('./navbar.json');
         const { d3, locale, navbar } = setup('<div id="navbar"></div>', done);
         const locales = new locale(specs);
-        const config = {"my_url": "http://localhost"};
+        const config = {
+            "container": "#navbar",
+            "languages": "#languages",
+            "language_page": "index.html",
+            "language_query": "x=y&l",
+            "my_url": "http://localhost"
+        };
         const nav = new navbar(config, locales);
         //console.log(nav.build(structure));
         const elm = d3.select('#navbar');
-        nav.fill(elm, structure);
+        nav.fill(structure);
         const brand = elm.select('.navbar-brand');
         const logo = brand.select('a.navbar-item');
         assert.equal(logo.attr('href'), 'http://localhost');
@@ -186,7 +192,21 @@ describe('Navigation bar', () => {
         assert.equal(items.filter(':nth-child(2)').text().trim(), 'Two');
         assert.equal(items.filter(':nth-child(2)').select('.icon i').attr('class'), 'far fa-circle');
 
-        const end = menu.select('.navbar-end a.navbar-item');
+        const languages = menu.select('.navbar-end > .navbar-item.has-dropdown');
+        const back = languages.select('.navbar-link');
+        assert.equal(back.attr('href'), '/');
+        assert.equal(back.attr('title'), 'Return to default language');
+        const langs = languages.selectAll('#languages > ul > li');
+        assert.equal(langs.size(), 2);
+        const active = langs.select('a.is-active');
+        assert.equal(active.attr('href'), 'index.html?x=y&l=en');
+        assert.equal(active.attr('hreflang'), 'en');
+        assert.equal(active.text(), 'English');
+        const inactive = langs.select('a:not(.is-active)');
+        assert.equal(inactive.attr('href'), 'index.html?x=y&l=nl');
+        assert.equal(inactive.attr('hreflang'), 'nl');
+        assert.equal(inactive.text(), 'Nederlands');
+        const end = menu.select('.navbar-end > a.navbar-item');
         assert.equal(end.attr('href'), 'https://example.com');
         assert.equal(end.attr('title'), 'Example');
         const example = end.select('img');

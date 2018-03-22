@@ -24,11 +24,10 @@ supports rewriting ES2015 or later syntax.
 The library provides four objects: `locale`, `navbar`, `navigation` and 
 `spinner`. These objects must be instantiated with `new`. All modules can be 
 provided an object upon construction, which is provides configuration options 
-for the fragment except for `locale` where it provides localaliation 
-specifications. All modules except for `locale` and `navbar` have the option 
-`container` which defines a query selector for an element to insert the 
-fragment into. In the `navbar`, the locale can be passed separately upon 
-construction and the selection is to be provided to a method call.
+for the fragment except for `locale` where it provides localization 
+specifications. All modules except for `locale` have the option `container` 
+which defines a query selector for an element to insert the fragment into. In 
+the `navbar`, the locale is passed separately upon construction.
 
 ### Locale
 
@@ -81,18 +80,24 @@ Create a horizontal navigation heading to provide a branding, menus and other
 accessibility links. The navigation bar structure is defined by nested objects 
 and arrays, and optionally configuration and locale sources. The structure is 
 optimized to define a navigation heading with items, links, icons, but also 
-branding, burger and other sections.
+branding, burger, menu, dropdown and other sections.
 
 Setup:
 
 ```
 const nav = new navbar({
-    "my_url": "https://example.com"
+    "container": ".navbar", // Navbar container
+    "languages": "#languages", // Selector of a menu in the structure
+    "language_page": "index.html",
+    "language_query": "lang",
+    "my_url": "https://example.com" // Referenced from a link with "config" key
 }, locales);
-nav.fill(d3.select('#navbar'), structure);
+nav.fill(structure);
 ```
 
-See `tests/navbar.json` for an example structure.
+See 
+[tests/navbar.json](https://github.com/ICTU/gros-visualization-ui/blob/master/tests/navbar.json) 
+for an example structure.
 
 ### Navigation
 

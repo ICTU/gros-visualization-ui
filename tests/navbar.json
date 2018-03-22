@@ -76,6 +76,23 @@
                 "type": "end",
                 "items": [
                     {
+                        "type": "dropdown",
+                        "id": "languages",
+                        "items": [],
+                        "link": {
+                            "url": "/",
+                            "icon": ["fas", "language"],
+                            "content": {
+                                "en": "Language",
+                                "nl": "Taal"
+                            },
+                            "title": {
+                                "en": "Return to default language",
+                                "nl": "Terugkeren naar standaardtaal"
+                            }
+                        }
+                    },
+                    {
                         "type": "link",
                         "url": "https://example.com",
                         "title": {
