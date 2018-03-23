@@ -3,6 +3,10 @@
 [![npm](https://img.shields.io/npm/v/@gros/visualization-ui.svg)](https://www.npmjs.com/package/@gros/visualization-ui)
 [![Build 
 Status](https://travis-ci.org/ICTU/gros-visualization-ui.svg?branch=master)](https://travis-ci.org/ICTU/gros-visualization-ui)
+[![Coverage 
+Status](https://coveralls.io/repos/github/ICTU/gros-visualization-ui/badge.svg?branch=master)](https://coveralls.io/github/ICTU/gros-visualization-ui?branch=master)
+[![Quality Gate 
+Status](https://sonarcloud.io/api/project_badges/measure?project=ictu-gros%3Avisualization-ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=ictu-gros%3Avisualization-ui)
 
 This library contains a number of user interface fragments to be used in 
 visualization based on [Data-Driven Documents](https://d3js.org/).
@@ -84,7 +88,7 @@ branding, burger, menu, dropdown and other sections.
 
 Setup:
 
-```
+```js
 const nav = new navbar({
     "container": ".navbar", // Navbar container
     "languages": "#languages", // Selector of a menu in the structure
