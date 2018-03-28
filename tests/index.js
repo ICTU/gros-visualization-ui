@@ -185,7 +185,7 @@ describe('Navigation bar', () => {
         assert.equal(menu.attr('id'), 'menu-content');
         const item = menu.select('.navbar-start .navbar-item');
         const link = item.select('.navbar-link');
-        assert.equal(link.attr('href'), 'http://localhost');
+        assert.equal(link.attr('href'), 'http://localhost/content?prop=value&message=Message content');
         assert.equal(link.text().trim(), 'Contents');
         const items = item.selectAll('.navbar-dropdown a.navbar-item');
         assert.equal(items.size(), 2);
@@ -217,7 +217,7 @@ describe('Navigation bar', () => {
         assert.equal(end.attr('href'), 'https://example.com');
         assert.equal(end.attr('title'), 'Example');
         const example = end.select('img');
-        assert.equal(example.attr('src'), 'example.svg');
+        assert.equal(example.attr('src'), 'http://localhost/example-en.svg');
         assert.equal(example.attr('width'), '50');
         assert.equal(example.attr('height'), '24');
 
