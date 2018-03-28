@@ -1,0 +1,6 @@
+{
+    "reporterEnabled": "spec, mocha-sonar-generic-test-coverage",
+    "mochaSonarGenericTestCoverageReporterOptions": {
+        "outputFile": "test-report.xml"
+    }
+}

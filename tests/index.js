@@ -54,7 +54,9 @@ function setup(body, done) {
     currentWindow = dom.window;
 
     return {
-        window: dom.window, d3: d3window, locale, navbar, navigation, spinner
+        window: dom.window,
+        d3: d3window,
+        locale, navbar, navigation, spinner
     };
 }
 
@@ -159,7 +161,6 @@ describe('Navigation bar', () => {
             "my_url": "http://localhost"
         };
         const nav = new navbar(config, locales);
-        //console.log(nav.build(structure));
         const elm = d3.select('#navbar');
         nav.fill(structure);
         const brand = elm.select('.navbar-brand');
@@ -175,6 +176,10 @@ describe('Navigation bar', () => {
         const burger = brand.select('.navbar-burger');
         assert.equal(burger.attr('data-target'), 'menu-content');
         assert.equal(burger.selectAll('span').size(), 3);
+
+        const fullscreen = brand.select('.navbar-fullscreen');
+        assert.equal(fullscreen.attr('title'), 'Full screen');
+        assert.equal(fullscreen.select('.icon i').attr('class'), 'fas fa-arrows-alt');
 
         const menu = elm.select('.navbar-menu');
         assert.equal(menu.attr('id'), 'menu-content');
@@ -215,6 +220,30 @@ describe('Navigation bar', () => {
         assert.equal(example.attr('height'), '24');
 
         done();
+    });
+    it('Dispatches fullscreen events', (done) => {
+        const specs = require('./locales.json');
+        const structure = require('./navbar.json');
+        const { d3, locale, navbar } = setup('<div id="navbar"></div>', done);
+        const locales = new locale(specs);
+        const config = {
+            "container": "#navbar",
+            "languages": "#languages",
+            "language_page": "index.html",
+            "language_query": "x=y&l",
+            "my_url": "http://localhost"
+        };
+        const nav = new navbar(config, locales);
+        const elm = d3.select('#navbar');
+        nav.fill(structure);
+        const fullscreen = elm.select('.navbar-fullscreen');
+
+        elm.on('fullscreen', () => {
+            assert.isTrue(fullscreen.classed('is-active'));
+            done();
+        });
+        fullscreen.dispatch('click');
+        nav.setFullscreen(true);
     });
 });
 

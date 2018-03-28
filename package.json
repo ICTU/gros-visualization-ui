@@ -23,7 +23,7 @@
   },
   "scripts": {
     "pretest": "cross-env NODE_ENV=test webpack --hide-modules",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --reporter=spec --reporter mocha-sonar-generic-test-coverage --reporter-options outputFile=test-report.xml tests",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --reporter=mocha-multi-reporters --reporter-options configFile=test-config.json tests",
     "coveralls": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | cross-env NODE_ENV=test coveralls",
     "preversion": "npm test",
     "postversion": "git push && git push --tags"
@@ -47,6 +47,7 @@
     "cross-env": "^5.1.1",
     "jsdom": "^11.5.1",
     "mocha": "^4.0.1",
+    "mocha-multi-reporters": "^1.1.7",
     "mocha-sonar-generic-test-coverage": "0.0.6",
     "nyc": "^11.6.0",
     "webpack": "^3.10.0"

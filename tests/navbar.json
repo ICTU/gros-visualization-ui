@@ -30,6 +30,14 @@
                 "type": "burger",
                 "target": "menu-content",
                 "lines": 3
+            },
+            {
+                "type": "fullscreen",
+                "icon": ["fas", "arrows-alt"],
+                "title": {
+                    "en": "Full screen",
+                    "nl": "Volledig scherm"
+                }
             }
         ]
     },
