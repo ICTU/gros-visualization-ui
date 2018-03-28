@@ -68,6 +68,9 @@
                                 }
                             },
                             {
+                                "type": "divider"
+                            },
+                            {
                                 "type": "link",
                                 "url": "two",
                                 "icon": ["far", "circle"],

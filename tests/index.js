@@ -189,13 +189,15 @@ describe('Navigation bar', () => {
         assert.equal(link.text().trim(), 'Contents');
         const items = item.selectAll('.navbar-dropdown a.navbar-item');
         assert.equal(items.size(), 2);
-        assert.equal(items.filter(':nth-child(1)').attr('href'), 'one');
-        assert.equal(items.filter(':nth-child(1)').text().trim(), 'One');
-        assert.equal(items.filter(':nth-child(1)').select('.icon i').attr('class'), 'fas fa-align-center');
+        assert.equal(items.filter(':first-child').attr('href'), 'one');
+        assert.equal(items.filter(':first-child').text().trim(), 'One');
+        assert.equal(items.filter(':first-child').select('.icon i').attr('class'), 'fas fa-align-center');
 
-        assert.equal(items.filter(':nth-child(2)').attr('href'), 'two');
-        assert.equal(items.filter(':nth-child(2)').text().trim(), 'Two');
-        assert.equal(items.filter(':nth-child(2)').select('.icon i').attr('class'), 'far fa-circle');
+        assert.equal(items.filter(':last-child').attr('href'), 'two');
+        assert.equal(items.filter(':last-child').text().trim(), 'Two');
+        assert.equal(items.filter(':last-child').select('.icon i').attr('class'), 'far fa-circle');
+        const divider = item.select('.navbar-dropdown hr');
+        assert.isTrue(divider.classed('navbar-divider'));
 
         const languages = menu.select('.navbar-end > .navbar-item.has-dropdown');
         const back = languages.select('.navbar-link');
@@ -221,6 +223,41 @@ describe('Navigation bar', () => {
 
         done();
     });
+    it('Ignores invalid types', (done) => {
+        const specs = require('./locales.json');
+        const structure = [{"type": "invalid"}];
+        const { d3, locale, navbar } = setup('<div id="navbar"></div>', done);
+        const locales = new locale(specs);
+        const config = {
+            "container": "#navbar"
+        };
+        const nav = new navbar(config, locales);
+        const elm = d3.select('#navbar');
+        nav.fill(structure);
+
+        done();
+    });
+    it('Dispatches burger events', (done) => {
+        const specs = require('./locales.json');
+        const structure = require('./navbar.json');
+        const { d3, locale, navbar } = setup('<div id="navbar"></div>', done);
+        const locales = new locale(specs);
+        const config = {
+            "container": "#navbar",
+            "languages": "#languages",
+        };
+        const nav = new navbar(config, locales);
+        const elm = d3.select('#navbar');
+        nav.fill(structure);
+        const burger = elm.select('.navbar-burger');
+
+        burger.on('click.test', () => {
+            assert.isTrue(burger.classed('is-active'));
+            assert.isTrue(elm.select('#menu-content').classed('is-active'));
+            done();
+        });
+        burger.dispatch('click');
+    });
     it('Dispatches fullscreen events', (done) => {
         const specs = require('./locales.json');
         const structure = require('./navbar.json');
@@ -229,9 +266,6 @@ describe('Navigation bar', () => {
         const config = {
             "container": "#navbar",
             "languages": "#languages",
-            "language_page": "index.html",
-            "language_query": "x=y&l",
-            "my_url": "http://localhost"
         };
         const nav = new navbar(config, locales);
         const elm = d3.select('#navbar');
