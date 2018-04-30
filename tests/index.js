@@ -103,6 +103,8 @@ describe('Locale', () => {
         assert.equal(locales.lang, "en");
         assert.equal(locales.selectedLocale, specs.en);
 
+        assert.equal(locales.locale().format(",.4f")(1234.5678), "1,234.5678");
+
         locales.select("nl");
         assert.equal(locales.lang, "nl");
         assert.equal(locales.selectedLocale, specs.nl);
@@ -114,6 +116,8 @@ describe('Locale', () => {
         assert.equal(locales.retrieve({en: "Yes", nl: "Ja"}), "Ja");
         assert.equal(locales.attribute("attribute", "x"), "een");
         assert.equal(locales.get("prop"), "waarde");
+
+        assert.equal(locales.locale().format(",.4f")(1234.5678), "1.234,5678");
 
         done();
     });
@@ -385,14 +389,23 @@ describe('Spinner', () => {
         assert.isFalse(d3.select("svg#loader").empty(), 'Spinner has SVG');
         done();
     });
-    it('Creates at most one spinner', (done) => {
+    it('Creates at most one spinner with same ID', (done) => {
         const { window, d3, spinner } = setup('<div id="loader_container"></div>', done);
         const loadingSpinner = new spinner();
         loadingSpinner.start();
         loadingSpinner.start();
         assert.equal(d3.selectAll("svg#loader").size(), 1);
-        loadingSpinner.stop();
-        assert.isTrue(d3.select("svg#loader").empty(), 'Spinner is removed');
         done();
+    });
+    it('Removes the spinner and its events', (done) => {
+        const { window, d3, spinner } = setup('<div id="loader_container"></div>', done);
+        const duration = 25;
+        const loadingSpinner = new spinner({ duration: duration });
+        loadingSpinner.start();
+        setTimeout(function() {
+            loadingSpinner.stop();
+            assert.isTrue(d3.select("svg#loader").empty(), 'Spinner is removed');
+            setTimeout(done, duration*2);
+        }, duration);
     });
 });
