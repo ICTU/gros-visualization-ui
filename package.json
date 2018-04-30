@@ -26,6 +26,7 @@
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --reporter=mocha-multi-reporters --reporter-options configFile=test-config.json tests",
     "coveralls": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | cross-env NODE_ENV=test coveralls",
     "preversion": "npm test",
+    "version": "sed -i '' -e s/sonar\\.projectVersion=.*/sonar.projectVersion=$(jq -r .version package.json)/ sonar-project.properties && git add sonar-project.properties",
     "postversion": "git push && git push --tags"
   },
   "nyc": {
