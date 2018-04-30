@@ -6,6 +6,10 @@
             "x": "one",
             "y": "two"
         },
+        "decimal": ".",
+        "thousands": ",",
+        "grouping": [3],
+        "currency": ["$", ""],
         "messages": {
             "number": "Count",
             "owner": "the owner",
@@ -21,6 +25,10 @@
             "x": "een",
             "y": "twee"
         },
+        "decimal": ",",
+        "thousands": ".",
+        "grouping": [3],
+        "currency": ["$", ""],
         "messages": {
             "number": "Aantal",
             "owner": "de eigenaar",
