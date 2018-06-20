@@ -22,6 +22,12 @@ const assert = require('chai').assert,
       setupPage = require('./index');
 
 describe('Locale', () => {
+    it('Creates a locale', (done) => {
+        const { d3, locale } = setupPage('', done);
+        const locales = new locale();
+        assert.equal(locales.lang, "en");
+        done();
+    });
     it('Selects locales', (done) => {
         const specs = require('./locales.json');
         const { d3, locale } = setupPage('', done);
@@ -49,6 +55,7 @@ describe('Locale', () => {
         assert.equal(locales.attribute("nothere", "y", "xyz"), "xyz");
         assert.equal(locales.retrieve(extraSpecs, "remote"), "external");
         assert.equal(locales.retrieve({en: "Yes", nl: "Ja"}), "Yes");
+        assert.equal(locales.retrieve(extraSpecs, "other"), "other");
         assert.equal(locales.retrieve(extraSpecs, "other", "miss"), "miss");
         assert.equal(locales.get("prop"), "value");
 
@@ -95,11 +102,20 @@ describe('Locale', () => {
     });
     it('Replaces messages', (done) => {
         const specs = require('./locales.json');
-        const { window, d3, locale } = setupPage('<p data-message="test"></p><div data-message="replace"><span class="count" data-message-title="number">5</span> <span data-message="owner">UUU</span></div>', done);
+        const html = '<p data-message="test"></p><div data-message="replace"><span class="count" data-message-title="number">5</span> <span data-message="owner">UUU</span></div><article data-message="missing" data-message-title="missing-title"></article>';
+        const { window, d3, locale } = setupPage(`<section id="one">${html}</section><section id="two">${html}</section>`, done);
         const locales = new locale(specs, "en");
-        locales.updateMessages(d3, ['title']);
-        assert.equal(d3.select("p").text(), "This is a test.");
-        assert.equal(d3.select("div").html(), `There are <span class="count" data-message-title="number" title="Count">5</span> pens on the table, owned by <span data-message="owner">the owner</span>.`);
+        locales.updateMessages(d3.select("#one"), ['title'], null);
+        assert.equal(d3.select("#two").html(), html);
+        assert.equal(d3.select("#one p").text(), "This is a test.");
+        assert.equal(d3.select("#one div").html(), `There are <span class="count" data-message-title="number" title="Count">5</span> pens on the table, owned by <span data-message="owner">the owner</span>.`);
+        assert.equal(d3.select("#one article").text(), "");
+        assert.equal(d3.select("#one article").attr("title"), null);
+        locales.updateMessages();
+        assert.equal(d3.select("#two p").text(), "This is a test.");
+        assert.equal(d3.select("#two article").text(), "missing");
+        locales.updateMessages(d3.select("#two"), ['title']);
+        assert.equal(d3.select("#two article").attr("title"), "missing-title");
         done();
     });
 });

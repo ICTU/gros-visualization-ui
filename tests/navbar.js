@@ -146,9 +146,17 @@ describe('Navigation bar', () => {
         nav.fill(structure);
         const fullscreen = elm.select('.navbar-fullscreen');
 
+        let count = 0;
         elm.on('fullscreen', () => {
-            assert.isTrue(fullscreen.classed('is-active'));
-            done();
+            count++;
+            assert.equal(fullscreen.classed('is-active'), count < 2);
+            if (count < 2) {
+                fullscreen.dispatch('click');
+                nav.setFullscreen(false);
+            }
+            else {
+                done();
+            }
         });
         fullscreen.dispatch('click');
         nav.setFullscreen(true);
