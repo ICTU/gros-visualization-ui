@@ -306,13 +306,21 @@ describe('Navigation', () => {
         const items = d3.selectAll('#navigation ul li'),
               first = items.filter(":nth-child(1)");
         assert.isTrue(first.classed('is-active'), 'First element selected');
-        window.location.hash = "#BAZ";
-        window.addEventListener("hashchange", () => {
+        function hash_baz() {
+            window.removeEventListener("hashchange", hash_baz);
             assert.isFalse(first.classed('is-active'), 'First element unselected');
             const second = items.filter(":nth-child(2)");
             assert.isTrue(second.classed('is-active'), 'Second element selected');
-            done();
-        });
+
+            window.addEventListener("hashchange", () => {
+                assert.isFalse(first.classed('is-active'), 'First element unselected');
+                assert.isFalse(second.classed('is-active'), 'Second element unselected');
+                done();
+            });
+            window.location.hash = "#NONEXISTENT";
+        }
+        window.addEventListener("hashchange", hash_baz);
+        window.location.hash = "#BAZ";
     });
 
     it('Works with multiple navigations', (done) => {
@@ -358,6 +366,22 @@ describe('Navigation', () => {
         });
     });
 
+    it('Works with multiple updates', (done) => {
+        const { window, d3, navigation } = setup('<div id="projects"></div><div id="times"></div>', done);
+        const projectsNavigation = new navigation({
+            container: '#projects',
+            prefix: 'project_'
+        });
+        projectsNavigation.start(projectsList);
+
+        projectsNavigation.update(['BAR', 'DEF', 'FOO', 'QUX']);
+        assert.equal(d3.selectAll('#projects ul li').size(), 4);
+
+        projectsNavigation.update(['DEF', 'ZUR']);
+        assert.equal(d3.selectAll('#projects ul li a').size(), 2);
+        done();
+    });
+
     it('Honors callback actions', (done) => {
         const { window, d3, navigation } = setup('<div id="navigation"></div>', done);
         window.location.hash = "#something_else";
@@ -370,6 +394,12 @@ describe('Navigation', () => {
             },
             addElement: (element) => {
                 element.text(d => `Project ${d}`);
+            },
+            updateElement: (element) => {
+                element.attr('target', '_blank');
+            },
+            removeElement: (element) => {
+                element.style('background', 'red');
             }
         });
         projectsNavigation.start(projectsList);
@@ -377,6 +407,9 @@ describe('Navigation', () => {
               first = items.filter(":nth-child(1)");
         assert.isFalse(first.classed('is-active'), 'First element not selected');
         assert.equal(first.select('a').text(), 'Project BAR');
+        assert.equal(first.select('a').attr('target'), '_blank');
+        projectsNavigation.update([]);
+        assert.equal(first.style('background'), 'red');
         done();
     });
 });
