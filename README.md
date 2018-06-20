@@ -111,9 +111,10 @@ checked on startup.
 Multiple navigation objects can exist concurrently if a unique `prefix` is 
 given to each of them. By default, the first item in the navigation is 
 selected, but this can be overridden by returning `true` in `setCurrentItem`, 
-in which case nothing is selected if an unknown location hash is set at start.
+in which case nothing is selected if an unknown item is set in the location 
+hash at start.
 
-Setup:
+Setup and usage:
 
 ```js
 const projectsList = ['BAR', 'BAZ', 'FOO'];
@@ -132,12 +133,16 @@ const projectsNavigation = new navigation({
     addElement: (element) => {
         element.text(d => `Project ${d}`);
     }
+    // updateElement and removeElement can also access element selections
 })
 projectsNavigation.start(projectsList);
 
 location.hash = '#project_FOO'; // Select the third project
 location.hash = '#FOO'; // Not handled
 location.hash = '#project_QUX'; // Unknown project selected
+
+// Update navigation list
+projectsNavigation.update(projectsList.concat('QUX', 'ZUR'));
 ```
 
 ### Spinner
