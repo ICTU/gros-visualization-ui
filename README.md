@@ -145,6 +145,12 @@ location.hash = '#project_QUX'; // Unknown project selected
 projectsNavigation.update(projectsList.concat('QUX', 'ZUR'));
 ```
 
+The items in the list must be unique such that the appropriate element is 
+selected. Using data objects as items in the provided navigation list is also 
+supported as long as a `key` configuration is provided which acts as both the 
+`d3` data key function and the default method of displaying text and creating 
+a comparable anchor in the navigation item link.
+
 ### Spinner
 
 Create a loading spinner which can be shown until the data is fully loaded.
