@@ -118,6 +118,65 @@ describe('Navigation', () => {
         done();
     });
 
+    it('Sets active class with key functions', (done) => {
+        const { window, d3, navigation } = setupPage('<div id="navigation"></div>', done);
+        const projectsNavigation = new navigation({
+            key: d => d.key,
+            addElement: (element) => {
+                element.text(d => d.key);
+            }
+        });
+        projectsNavigation.start([
+            {key:'BAR'}, {key:'BAZ'}, {key:'FOO'}
+        ]);
+        const items = d3.selectAll('#navigation ul li'),
+              first = items.filter(":nth-child(1)");
+        assert.isTrue(first.classed('is-active'), 'First element selected');
+        function hash_baz() {
+            window.removeEventListener("hashchange", hash_baz);
+            assert.isFalse(first.classed('is-active'), 'First element unselected');
+            const second = items.filter(":nth-child(2)");
+            assert.isTrue(second.classed('is-active'), 'Second element selected');
+            done();
+        }
+        window.addEventListener("hashchange", hash_baz);
+        window.location.hash = "#BAZ";
+    });
+
+    it('Works with key functions in updates', (done) => {
+        const { window, d3, navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
+        const projectsNavigation = new navigation({
+            container: '#projects',
+            prefix: 'project_',
+            key: d => d.key,
+            addElement: (element) => {
+                element.text(d => d.key);
+            }
+        });
+        projectsNavigation.start([
+            {key:'BAR'}, {key:'BAZ'}, {key:'FOO'}
+        ]);
+
+        projectsNavigation.update([
+            {key:'BAR'}, {key:'DEF'}, {key: 'EQN'}, {key:'FOO'}, {key:'QUX'}
+        ]);
+        assert.equal(d3.selectAll('#projects ul li').size(), 5);
+        assert.equal(d3.select('#projects ul li:nth-child(1) a').text(), 'BAR');
+        assert.equal(d3.select('#projects ul li:nth-child(1) a').attr('href'), '#project_BAR');
+        assert.equal(d3.select('#projects ul li:nth-child(2) a').text(), 'DEF');
+        assert.equal(d3.select('#projects ul li:nth-child(3) a').text(), 'EQN');
+        assert.equal(d3.select('#projects ul li:nth-child(4) a').text(), 'FOO');
+        assert.equal(d3.select('#projects ul li:nth-child(5) a').text(), 'QUX');
+
+        projectsNavigation.update([{key:'DEF'}, {key:'ZUR'}]);
+        assert.equal(d3.selectAll('#projects ul li a').size(), 2);
+        assert.equal(d3.select('#projects ul li:nth-child(1) a').text(), 'DEF');
+        assert.equal(d3.select('#projects ul li:nth-child(1) a').attr('href'), '#project_DEF');
+        assert.equal(d3.select('#projects ul li:nth-child(2) a').text(), 'ZUR');
+        assert.equal(d3.select('#projects ul li:nth-child(2) a').attr('href'), '#project_ZUR');
+        done();
+    });
+
     it('Honors callback actions', (done) => {
         const { window, d3, navigation } = setupPage('<div id="navigation"></div>', done);
         window.location.hash = "#something_else";
