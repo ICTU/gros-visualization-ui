@@ -29,6 +29,23 @@ describe('Spinner', () => {
         assert.isFalse(d3.select("svg#loader").empty(), 'Spinner has SVG');
         done();
     });
+    it('Rotates the spinner', (done) => {
+        const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
+        const duration = 25;
+        const transformRegex = /rotate\(-?[0-9]+(\.[0-9]+)?\)/;
+        const loadingSpinner = new spinner({ duration: duration });
+        loadingSpinner.start();
+        setTimeout(function() {
+            const firstTransform = d3.select("svg#loader g g").attr("transform");
+            assert.match(firstTransform, transformRegex, 'First transform');
+            setTimeout(function() {
+                const secondTransform = d3.select("svg#loader g g").attr("transform");
+                assert.match(secondTransform, transformRegex, 'New transform');
+                assert.notEqual(secondTransform, firstTransform, 'Different transform');
+                done();
+            }, duration*1.5);
+        }, duration);
+    });
     it('Creates at most one spinner with same ID', (done) => {
         const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
         const loadingSpinner = new spinner();
