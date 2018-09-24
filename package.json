@@ -34,8 +34,8 @@
     "instrument": false
   },
   "dependencies": {
-    "d3": "^4.12.0",
-    "mustache": "^2.3.0",
+    "d3": "^5.7.0",
+    "mustache": "^3.0.0",
     "sprintf-js": "^1.1.1"
   },
   "devDependencies": {
