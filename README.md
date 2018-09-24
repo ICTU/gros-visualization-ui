@@ -121,7 +121,7 @@ const projectsList = ['BAR', 'BAZ', 'FOO'];
 const projectsNavigation = new navigation({
     container: '#navigation',
     prefix: 'project_',
-    setCurrentItem: (project, hasProject) => {
+    setCurrentItem: (project, hasProject, list) => {
         if (!hasProject) {
             console.log('An unknown project was selected: ' + project);
         }
@@ -130,10 +130,11 @@ const projectsNavigation = new navigation({
         }
         return hasProject;
     },
+    // Customize *link* properties of new items
     addElement: (element) => {
         element.text(d => `Project ${d}`);
     }
-    // updateElement and removeElement can also access element selections
+    // Access other *list item* selections via updateElement and removeElement
 })
 projectsNavigation.start(projectsList);
 

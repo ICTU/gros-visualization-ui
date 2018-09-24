@@ -191,7 +191,7 @@ describe('Navigation', () => {
                 element.text(d => `Project ${d}`);
             },
             updateElement: (element) => {
-                element.attr('target', '_blank');
+                element.select('a').attr('target', '_blank');
             },
             removeElement: (element) => {
                 element.style('background', 'red');
