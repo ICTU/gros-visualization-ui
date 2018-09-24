@@ -1,7 +1,7 @@
 /*
 Unit tests for the visualization fragments.
 
-Copyright 2017 ICTU
+Copyright 2017-2018 ICTU
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ const fs = require('fs'),
 const bundle = fs.readFileSync('dist/bundle.js').toString(),
       bundleScript = new Script(bundle);
 
+global.__coverage__ = {};
 var currentWindow;
 
 function setupPage(body, done) {
@@ -44,6 +45,7 @@ function setupPage(body, done) {
         virtualConsole
     });
 
+    dom.window.__coverage__ = global.__coverage__;
     // Create a D3 object.
     const d3window = d3.select(dom.window.document);
 

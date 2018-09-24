@@ -22,7 +22,7 @@
     "url": "https://github.com/ICTU/gros-visualization-ui/issues"
   },
   "scripts": {
-    "pretest": "cross-env NODE_ENV=test webpack --hide-modules",
+    "pretest": "cross-env NODE_ENV=test webpack --mode=development --hide-modules",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --reporter=mocha-multi-reporters --reporter-options configFile=test-config.json tests",
     "coveralls": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | cross-env NODE_ENV=test coveralls",
     "preversion": "npm test",
@@ -39,18 +39,19 @@
     "sprintf-js": "^1.1.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-istanbul": "^4.1.5",
-    "babel-preset-env": "^1.6.1",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-istanbul": "^5.1.0",
     "chai": "^4.1.2",
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.2",
     "cross-env": "^5.1.1",
-    "jsdom": "^11.5.1",
-    "mocha": "^4.0.1",
+    "jsdom": "^12.0.0",
+    "mocha": "^5.2.0",
     "mocha-multi-reporters": "^1.1.7",
     "mocha-sonar-generic-test-coverage": "0.0.6",
-    "nyc": "^11.6.0",
-    "webpack": "^3.10.0"
+    "nyc": "^13.1.0",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1"
   }
 }

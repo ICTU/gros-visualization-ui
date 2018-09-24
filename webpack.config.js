@@ -1,7 +1,7 @@
 /*
 Webpack configuration for unit test builds.
 
-Copyright 2017 ICTU
+Copyright 2017-2018 ICTU
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['babel-preset-env']
+                        presets: ['@babel/preset-env']
                     }
                 }
             }
