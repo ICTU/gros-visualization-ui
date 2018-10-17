@@ -67,7 +67,7 @@
                             {
                                 "type": "link",
                                 "url": "one",
-                                "icon": ["fas", "align-center"],
+                                "icon": "timeline-icon",
                                 "content": {
                                     "en": "One",
                                     "nl": "Een"
@@ -98,7 +98,7 @@
                         "items": [],
                         "link": {
                             "url": "/",
-                            "icon": ["fas", "language"],
+                            "icon": ["fas", "language", "xs"],
                             "content": {
                                 "en": "Language",
                                 "nl": "Taal"

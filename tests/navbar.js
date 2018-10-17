@@ -65,7 +65,7 @@ describe('Navigation bar', () => {
         assert.equal(items.size(), 2);
         assert.equal(items.filter(':first-child').attr('href'), 'one');
         assert.equal(items.filter(':first-child').text().trim(), 'One');
-        assert.equal(items.filter(':first-child').select('.icon i').attr('class'), 'fas fa-align-center');
+        assert.equal(items.filter(':first-child').select('.icon i').attr('class'), 'timeline-icon');
 
         assert.equal(items.filter(':last-child').attr('href'), 'two');
         assert.equal(items.filter(':last-child').text().trim(), 'Two');
@@ -77,6 +77,7 @@ describe('Navigation bar', () => {
         const back = languages.select('.navbar-link');
         assert.equal(back.attr('href'), '/');
         assert.equal(back.attr('title'), 'Return to default language');
+        assert.equal(back.select('.icon i').attr('class'), 'fas fa-language fa-xs');
         const langs = languages.selectAll('#languages > ul > li');
         assert.equal(langs.size(), 2);
         const active = langs.select('a.is-active');
