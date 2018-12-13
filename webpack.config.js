@@ -21,7 +21,8 @@ module.exports = {
     entry: "./index",
     output: {
         path: __dirname + "/dist",
-        filename: "bundle.js"
+        filename: process.env.NODE_ENV === "production" ? "bundle.min.js" :
+            "bundle.js"
     },
     devtool: 'cheap-source-map',
     module: {

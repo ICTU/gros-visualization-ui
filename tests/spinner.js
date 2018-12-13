@@ -31,20 +31,14 @@ describe('Spinner', () => {
     });
     it('Rotates the spinner', (done) => {
         const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
-        const duration = 25;
-        const transformRegex = /rotate\(-?[0-9]+(\.[0-9]+)?\)/;
-        const loadingSpinner = new spinner({ duration: duration });
+        const loadingSpinner = new spinner({
+            startAngle: 45,
+            duration: 1000
+        });
         loadingSpinner.start();
-        setTimeout(function() {
-            const firstTransform = d3.select("svg#loader g g").attr("transform");
-            assert.match(firstTransform, transformRegex, 'First transform');
-            setTimeout(function() {
-                const secondTransform = d3.select("svg#loader g g").attr("transform");
-                assert.match(secondTransform, transformRegex, 'New transform');
-                assert.notEqual(secondTransform, firstTransform, 'Different transform');
-                done();
-            }, duration*1.5);
-        }, duration);
+        const spin = d3.select("svg#loader g g");
+        assert.equal(spin.attr("style"), "transform: rotate(45deg); animation: gros-spinner 1000ms linear;");
+        done();
     });
     it('Creates at most one spinner with same ID', (done) => {
         const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
@@ -59,10 +53,8 @@ describe('Spinner', () => {
         const duration = 25;
         const loadingSpinner = new spinner({ duration: duration });
         loadingSpinner.start();
-        setTimeout(function() {
-            loadingSpinner.stop();
-            assert.isTrue(d3.select("svg#loader").empty(), 'Spinner is removed');
-            setTimeout(done, duration*2);
-        }, duration);
+        loadingSpinner.stop();
+        assert.isTrue(d3.select("svg#loader").empty(), 'Spinner is removed');
+        done();
     });
 });

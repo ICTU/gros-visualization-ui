@@ -23,6 +23,13 @@ This requires that your visualization is built via
 [Webpack](https://webpack.js.org/) or some other dependency bundler that 
 supports rewriting ES2015 or later syntax.
 
+Additionally, to enable spinner animations, include the SCSS sources into your
+bundler, or add the distributed CSS bundle to a Web page, for example using:
+
+```html
+<link rel="stylesheet" href="dist/bundle.min.css">
+```
+
 ## Overview
 
 The library provides four objects: `locale`, `navbar`, `navigation` and 
@@ -167,6 +174,8 @@ const loadingSpinner = new spinner({
     startAngle: 220
 });
 loadingSpinner.start();
+
+// ... Perform some loading, processing, etc.
 
 loadingSpinner.stop();
 ```

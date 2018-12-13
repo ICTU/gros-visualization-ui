@@ -6,11 +6,16 @@
   "author": "Leon Helwerda <l.s.helwerda@liacs.leidenuniv.nl>",
   "files": [
     "lib/*.js",
+    "res/*.scss",
     "index.js",
+    "dist/*.css",
+    "dist/*.css.map",
     "README.md"
   ],
   "directories": {
     "lib": "lib",
+    "res": "res",
+    "dist": "dist",
     "test": "tests"
   },
   "repository": {
@@ -27,7 +32,10 @@
     "coveralls": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | cross-env NODE_ENV=test coveralls",
     "preversion": "npm test",
     "version": "sed -i '' -e s/sonar\\.projectVersion=.*/sonar.projectVersion=$(jq -r .version package.json)/ sonar-project.properties && git add sonar-project.properties",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "prepare": "npm run build-css",
+    "build-js": "cross-env NODE_ENV=production webpack --mode=production --hide-modules",
+    "build-css": "cross-env NODE_ENV=production node-sass --output-style compressed --source-map true res/index.scss dist/bundle.min.css"
   },
   "nyc": {
     "sourceMap": false,
@@ -51,6 +59,7 @@
     "mocha": "^5.2.0",
     "mocha-multi-reporters": "^1.1.7",
     "mocha-sonar-generic-test-coverage": "0.0.6",
+    "node-sass": "^4.11.0",
     "nyc": "^13.1.0",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
