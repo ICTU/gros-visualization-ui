@@ -23,15 +23,15 @@ const assert = require('chai').assert,
 
 describe('Spinner', () => {
     it('Creates the spinner', (done) => {
-        const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
-        const loadingSpinner = new spinner();
+        const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
+        const loadingSpinner = new Spinner();
         loadingSpinner.start();
         assert.isFalse(d3.select("svg#loader").empty(), 'Spinner has SVG');
         done();
     });
     it('Rotates the spinner', (done) => {
-        const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
-        const loadingSpinner = new spinner({
+        const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
+        const loadingSpinner = new Spinner({
             startAngle: 45,
             duration: 1000
         });
@@ -41,17 +41,17 @@ describe('Spinner', () => {
         done();
     });
     it('Creates at most one spinner with same ID', (done) => {
-        const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
-        const loadingSpinner = new spinner();
+        const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
+        const loadingSpinner = new Spinner();
         loadingSpinner.start();
         loadingSpinner.start();
         assert.equal(d3.selectAll("svg#loader").size(), 1);
         done();
     });
     it('Removes the spinner and its events', (done) => {
-        const { window, d3, spinner } = setupPage('<div id="loader_container"></div>', done);
+        const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
         const duration = 25;
-        const loadingSpinner = new spinner({ duration: duration });
+        const loadingSpinner = new Spinner({ duration: duration });
         loadingSpinner.start();
         loadingSpinner.stop();
         assert.isTrue(d3.select("svg#loader").empty(), 'Spinner is removed');

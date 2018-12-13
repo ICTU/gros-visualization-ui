@@ -50,14 +50,14 @@ function setupPage(body, done) {
     const d3window = d3.select(dom.window.document);
 
     // Run the script to acquire the module components.
-    const { locale, navbar, navigation, spinner } = dom.runVMScript(bundleScript);
+    const { Locale, Navbar, Navigation, Spinner } = dom.runVMScript(bundleScript);
 
     currentWindow = dom.window;
 
     return {
         window: dom.window,
         d3: d3window,
-        locale, navbar, navigation, spinner
+        Locale, Navbar, Navigation, Spinner
     };
 }
 

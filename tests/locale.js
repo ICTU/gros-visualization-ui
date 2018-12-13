@@ -23,15 +23,15 @@ const assert = require('chai').assert,
 
 describe('Locale', () => {
     it('Creates a locale', (done) => {
-        const { d3, locale } = setupPage('', done);
-        const locales = new locale();
+        const { d3, Locale } = setupPage('', done);
+        const locales = new Locale();
         assert.equal(locales.lang, "en");
         done();
     });
     it('Selects locales', (done) => {
         const specs = require('./locales.json');
-        const { d3, locale } = setupPage('', done);
-        const locales = new locale(specs);
+        const { d3, Locale } = setupPage('', done);
+        const locales = new Locale(specs);
         const extraSpecs = {
             en: {
                 remote: "external"
@@ -83,8 +83,8 @@ describe('Locale', () => {
     });
     it('Generates navigation', (done) => {
         const specs = require('./locales.json');
-        const { d3, locale } = setupPage('<div id="languages"></div>', done);
-        const locales = new locale(specs, "nl");
+        const { d3, Locale } = setupPage('<div id="languages"></div>', done);
+        const locales = new Locale(specs, "nl");
         locales.generateNavigation("#languages");
         const items = d3.selectAll("#languages ul li");
         assert.equal(items.size(), 2);
@@ -103,8 +103,8 @@ describe('Locale', () => {
     it('Replaces messages', (done) => {
         const specs = require('./locales.json');
         const html = '<p data-message="test"></p><div data-message="replace"><span class="count" data-message-title="number">5</span> <span data-message="owner">UUU</span></div><article data-message="missing" data-message-title="missing-title"></article>';
-        const { window, d3, locale } = setupPage(`<section id="one">${html}</section><section id="two">${html}</section>`, done);
-        const locales = new locale(specs, "en");
+        const { window, d3, Locale } = setupPage(`<section id="one">${html}</section><section id="two">${html}</section>`, done);
+        const locales = new Locale(specs, "en");
         locales.updateMessages(d3.select("#one"), ['title'], null);
         assert.equal(d3.select("#two").html(), html);
         assert.equal(d3.select("#one p").text(), "This is a test.");

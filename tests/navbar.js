@@ -25,8 +25,8 @@ describe('Navigation bar', () => {
     it('Builds navigation', (done) => {
         const specs = require('./locales.json');
         const structure = require('./navbar.json');
-        const { d3, locale, navbar } = setupPage('<div id="navbar"></div>', done);
-        const locales = new locale(specs);
+        const { d3, Locale, Navbar } = setupPage('<div id="navbar"></div>', done);
+        const locales = new Locale(specs);
         const config = {
             "container": "#navbar",
             "languages": "#languages",
@@ -34,7 +34,7 @@ describe('Navigation bar', () => {
             "language_query": "x=y&l",
             "my_url": "http://localhost"
         };
-        const nav = new navbar(config, locales);
+        const nav = new Navbar(config, locales);
         const elm = d3.select('#navbar');
         nav.fill(structure);
         const brand = elm.select('.navbar-brand');
@@ -101,12 +101,12 @@ describe('Navigation bar', () => {
     it('Ignores invalid types', (done) => {
         const specs = require('./locales.json');
         const structure = [{"type": "invalid"}];
-        const { d3, locale, navbar } = setupPage('<div id="navbar"></div>', done);
-        const locales = new locale(specs);
+        const { d3, Locale, Navbar } = setupPage('<div id="navbar"></div>', done);
+        const locales = new Locale(specs);
         const config = {
             "container": "#navbar"
         };
-        const nav = new navbar(config, locales);
+        const nav = new Navbar(config, locales);
         const elm = d3.select('#navbar');
         nav.fill(structure);
 
@@ -115,13 +115,13 @@ describe('Navigation bar', () => {
     it('Dispatches burger events', (done) => {
         const specs = require('./locales.json');
         const structure = require('./navbar.json');
-        const { d3, locale, navbar } = setupPage('<div id="navbar"></div>', done);
-        const locales = new locale(specs);
+        const { d3, Locale, Navbar } = setupPage('<div id="navbar"></div>', done);
+        const locales = new Locale(specs);
         const config = {
             "container": "#navbar",
             "languages": "#languages",
         };
-        const nav = new navbar(config, locales);
+        const nav = new Navbar(config, locales);
         const elm = d3.select('#navbar');
         nav.fill(structure);
         const burger = elm.select('.navbar-burger');
@@ -136,13 +136,13 @@ describe('Navigation bar', () => {
     it('Dispatches fullscreen events', (done) => {
         const specs = require('./locales.json');
         const structure = require('./navbar.json');
-        const { d3, locale, navbar } = setupPage('<div id="navbar"></div>', done);
-        const locales = new locale(specs);
+        const { d3, Locale, Navbar } = setupPage('<div id="navbar"></div>', done);
+        const locales = new Locale(specs);
         const config = {
             "container": "#navbar",
             "languages": "#languages",
         };
-        const nav = new navbar(config, locales);
+        const nav = new Navbar(config, locales);
         const elm = d3.select('#navbar');
         nav.fill(structure);
         const fullscreen = elm.select('.navbar-fullscreen');

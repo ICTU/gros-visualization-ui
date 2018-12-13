@@ -16,7 +16,7 @@ visualization based on [Data-Driven Documents](https://d3js.org/).
 Install the fragments using `npm install --save @gros/visualization-ui`, then 
 use them in your visualization sources with
 ```js
-import {locale, navbar, navigation, spinner} from '@gros/visualization-ui';
+import {Locale, Navbar, Navigation, Spinner} from '@gros/visualization-ui';
 ```
 
 This requires that your visualization is built via 
@@ -32,13 +32,14 @@ bundler, or add the distributed CSS bundle to a Web page, for example using:
 
 ## Overview
 
-The library provides four objects: `locale`, `navbar`, `navigation` and 
-`spinner`. These objects must be instantiated with `new`. All modules can be 
-provided an object upon construction, which is provides configuration options 
-for the fragment except for `locale` where it provides localization 
-specifications. All modules except for `locale` have the option `container` 
-which defines a query selector for an element to insert the fragment into. In 
-the `navbar`, the locale is passed separately upon construction.
+The library provides four classes: `Locale`, `Navbar`, `Navigation` and 
+`Spinner`. Objects must be instantiated with `new` and be provided an object as 
+the first argument upon construction, which is provides configuration options 
+for the fragment except for `Locale` where it provides localization 
+specifications. All classes except for `Locale` have a configuration option 
+`container` which defines a query selector for an element to insert the 
+fragment into. In the `Navbar` class, the locale is passed separately upon 
+construction.
 
 ### Locale
 
@@ -64,8 +65,9 @@ Setup:
 
 ```js
 import * as d3 from 'd3';
+import {Locale} from '@gros/visualization-ui';
 import spec from './locales.json';
-const locales = new locale(spec, lang="en");
+const locales = new Locale(spec, lang="en");
 // Select locale from query string
 locales.select(URLSearchParams(window.location.search).get("lang"));
 
@@ -96,7 +98,9 @@ branding, burger, menu, dropdown and other sections.
 Setup:
 
 ```js
-const nav = new navbar({
+import {Locale, Navbar} from '@gros/visualization-ui';
+const locales = new Locale();
+const nav = new Navbar({
     "container": ".navbar", // Navbar container
     "languages": "#languages", // Selector of a menu in the structure
     "language_page": "index.html",
@@ -124,8 +128,9 @@ hash at start.
 Setup and usage:
 
 ```js
+import {Navigation} from '@gros/visualization-ui';
 const projectsList = ['BAR', 'BAZ', 'FOO'];
-const projectsNavigation = new navigation({
+const projectsNavigation = new Navigation({
     container: '#navigation',
     prefix: 'project_',
     setCurrentItem: (project, hasProject, list) => {
@@ -166,7 +171,8 @@ Create a loading spinner which can be shown until the data is fully loaded.
 Setup:
 ```js
 import * as d3 from 'd3';
-const loadingSpinner = new spinner({
+import {Spinner} from '@gros/visualization-ui';
+const loadingSpinner = new Spinner({
     container: '#container',
     id: 'loading-spinner',
     width: d3.select('#container').node().clientWidth,

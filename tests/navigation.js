@@ -24,8 +24,8 @@ const assert = require('chai').assert,
 describe('Navigation', () => {
     const projectsList = ['BAR', 'BAZ', 'FOO'];
     it('Fills navigation', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="navigation"></div>', done);
-        const projectsNavigation = new navigation();
+        const { window, d3, Navigation } = setupPage('<div id="navigation"></div>', done);
+        const projectsNavigation = new Navigation();
         projectsNavigation.start(projectsList);
         const items = d3.selectAll('#navigation ul li');
         assert.equal(items.size(), 3);
@@ -36,8 +36,8 @@ describe('Navigation', () => {
     });
 
     it('Sets active class', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="navigation"></div>', done);
-        const projectsNavigation = new navigation();
+        const { window, d3, Navigation } = setupPage('<div id="navigation"></div>', done);
+        const projectsNavigation = new Navigation();
         projectsNavigation.start(projectsList);
         const items = d3.selectAll('#navigation ul li'),
               first = items.filter(":nth-child(1)");
@@ -60,14 +60,14 @@ describe('Navigation', () => {
     });
 
     it('Works with multiple navigations', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
-        const projectsNavigation = new navigation({
+        const { window, d3, Navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
+        const projectsNavigation = new Navigation({
             container: '#projects',
             prefix: 'project_'
         });
         projectsNavigation.start(projectsList);
 
-        const timeNavigation = new navigation({
+        const timeNavigation = new Navigation({
             container: '#times',
             prefix: 'time_'
         });
@@ -103,8 +103,8 @@ describe('Navigation', () => {
     });
 
     it('Works with multiple updates', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
-        const projectsNavigation = new navigation({
+        const { window, d3, Navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
+        const projectsNavigation = new Navigation({
             container: '#projects',
             prefix: 'project_'
         });
@@ -119,8 +119,8 @@ describe('Navigation', () => {
     });
 
     it('Sets active class with key functions', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="navigation"></div>', done);
-        const projectsNavigation = new navigation({
+        const { window, d3, Navigation } = setupPage('<div id="navigation"></div>', done);
+        const projectsNavigation = new Navigation({
             key: d => d.key,
             addElement: (element) => {
                 element.text(d => d.key);
@@ -144,8 +144,8 @@ describe('Navigation', () => {
     });
 
     it('Works with key functions in updates', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
-        const projectsNavigation = new navigation({
+        const { window, d3, Navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
+        const projectsNavigation = new Navigation({
             container: '#projects',
             prefix: 'project_',
             key: d => d.key,
@@ -178,9 +178,9 @@ describe('Navigation', () => {
     });
 
     it('Honors callback actions', (done) => {
-        const { window, d3, navigation } = setupPage('<div id="navigation"></div>', done);
+        const { window, d3, Navigation } = setupPage('<div id="navigation"></div>', done);
         window.location.hash = "#something_else";
-        const projectsNavigation = new navigation({
+        const projectsNavigation = new Navigation({
             setCurrentItem: (item, hasItem) => {
                 // Pretend we do something with the item, and since it does
                 // not exist in the navigation we do not select any item, even

@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import locale from './lib/locale';
-import navbar from './lib/navbar';
-import navigation from './lib/navigation';
-import spinner from './lib/spinner';
+import Locale from './lib/Locale';
+import Navbar from './lib/Navbar';
+import Navigation from './lib/Navigation';
+import Spinner from './lib/Spinner';
 
-export { locale, navbar, navigation, spinner };
+export { Locale, Navbar, Navigation, Spinner };
