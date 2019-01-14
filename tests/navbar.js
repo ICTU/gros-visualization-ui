@@ -58,9 +58,12 @@ describe('Navigation bar', () => {
         const menu = elm.select('.navbar-menu');
         assert.equal(menu.attr('id'), 'menu-content');
         const item = menu.select('.navbar-start .navbar-item');
+        assert.isTrue(item.classed('has-dropdown is-focus'));
         const link = item.select('.navbar-link');
         assert.equal(link.attr('href'), 'http://localhost/content?prop=value&message=Message content');
         assert.equal(link.text().trim(), 'Contents');
+        link.node().click();
+        assert.isTrue(item.classed('is-active'));
         const items = item.selectAll('.navbar-dropdown a.navbar-item');
         assert.equal(items.size(), 2);
         assert.equal(items.filter(':first-child').attr('href'), 'one');
@@ -81,10 +84,12 @@ describe('Navigation bar', () => {
         const langs = languages.selectAll('#languages > ul > li');
         assert.equal(langs.size(), 2);
         const active = langs.select('a.is-active');
+        assert.isTrue(active.classed('navbar-item'));
         assert.equal(active.attr('href'), 'index.html?x=y&l=en');
         assert.equal(active.attr('hreflang'), 'en');
         assert.equal(active.text(), 'English');
         const inactive = langs.select('a:not(.is-active)');
+        assert.isTrue(active.classed('navbar-item'));
         assert.equal(inactive.attr('href'), 'index.html?x=y&l=nl');
         assert.equal(inactive.attr('hreflang'), 'nl');
         assert.equal(inactive.text(), 'Nederlands');

@@ -50,6 +50,7 @@
                 "items": [
                     {
                         "type": "dropdown",
+                        "class": "is-focus",
                         "link": {
                             "url": [
                                 {"config": "my_url"},
