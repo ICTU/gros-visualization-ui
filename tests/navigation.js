@@ -103,7 +103,7 @@ describe('Navigation', () => {
     });
 
     it('Works with multiple updates', (done) => {
-        const { window, d3, Navigation } = setupPage('<div id="projects"></div><div id="times"></div>', done);
+        const { window, d3, Navigation } = setupPage('<div id="projects"></div>', done);
         const projectsNavigation = new Navigation({
             container: '#projects',
             prefix: 'project_'
@@ -127,7 +127,7 @@ describe('Navigation', () => {
             }
         });
         projectsNavigation.start([
-            {key:'BAR'}, {key:'BAZ'}, {key:'FOO'}
+            {key:'BAR'}, {key:'My New Project'}, {key:'FOO'}
         ]);
         const items = d3.selectAll('#navigation ul li'),
               first = items.filter(":nth-child(1)");
@@ -140,7 +140,7 @@ describe('Navigation', () => {
             done();
         }
         window.addEventListener("hashchange", hash_baz);
-        window.location.hash = "#BAZ";
+        window.location.hash = "#My%20New%20Project";
     });
 
     it('Works with key functions in updates', (done) => {
