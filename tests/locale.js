@@ -120,6 +120,7 @@ describe('Locale', () => {
         assert.equal(d3.select("#one article").text(), "");
         assert.equal(d3.select("#one article").attr("title"), null);
         locales.updateMessages();
+        assert.equal(d3.select("html").attr("lang"), "en");
         assert.equal(d3.select("#two p").text(), "This is a test.");
         assert.equal(d3.select("#two article").text(), "missing");
         locales.updateMessages(d3.select("#two"), ['title']);
