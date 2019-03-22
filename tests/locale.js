@@ -98,6 +98,14 @@ describe('Locale', () => {
         assert.equal(second.attr('hreflang'), 'nl');
         assert.equal(second.text(), 'Nederlands');
         assert.isTrue(items.filter(":nth-child(2)").classed("is-active"));
+        locales.updateNavigationLinks(items.selectAll('a'), 'page', 'lang',
+            '#location'
+        );
+        assert.equal(first.attr('href'), 'page?lang=en#location');
+        assert.equal(second.attr('href'), 'page?lang=nl#location');
+        locales.updateNavigationLinks(items.selectAll('a'));
+        assert.equal(first.attr('href'), '?en');
+        assert.equal(second.attr('href'), '?nl');
         done();
     });
     it('Replaces messages', (done) => {
