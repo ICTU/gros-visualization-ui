@@ -48,18 +48,20 @@ a selected locale. For this purpose, the object must be instantiated with an
 object containing locale-specific attribute objects, with language codes as 
 keys of the encompassing object. The attribute objects should have the same 
 keys as each other, where `"messages"` plays a special role; it must be an 
-object containing message keys and raw output or sprintf-compatible format 
+object containing message keys and raw output or `sprintf`-compatible format 
 strings. Also, `"language"` must provide a human-readable description of the 
 locale in its own language.
 
 The localization object can select a different language at any time, and can be 
 queried for any attribute or message from the locale object. Additionally, it 
 can generate a navigation list for selecting a different language (but it does
-not handle the selection change event itself), and it can automatically replace 
-elements with a `data-message` attribute in the document or a certain selection 
-with their locale equivalent, using the element children as arguments. It can 
-also replace attributes of elements when they are prefixed with `data-message-` 
-and their attribute name is explicitly provided.
+not handle the selection change event itself and defaults to reloading the page 
+with a different language as query parameter and the same anchor), and it can 
+automatically replace elements with a `data-message` attribute in the document 
+or a certain selection with their locale equivalent, using the element children 
+as arguments. It can also replace attributes of elements when they are prefixed 
+with `data-message-` and their attribute name is explicitly provided in the 
+call to `updateMessages`.
 
 Setup:
 
