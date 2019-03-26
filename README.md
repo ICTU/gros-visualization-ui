@@ -181,6 +181,7 @@ const loadingSpinner = new Spinner({
     height: 100,
     startAngle: 220
 });
+loadingSpinner.update({width: 100}); // New configuration
 loadingSpinner.start();
 
 // ... Perform some loading, processing, etc.

@@ -40,6 +40,21 @@ describe('Spinner', () => {
         assert.equal(spin.attr("style"), "transform: rotate(45deg); animation: gros-spinner 1000ms linear;");
         done();
     });
+    it('Updates the spinner', (done) => {
+        const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
+        const loadingSpinner = new Spinner({
+            startAngle: 45,
+            duration: 1000
+        });
+        loadingSpinner.update({
+            startAngle: 90,
+            duration: 100
+        });
+        loadingSpinner.start();
+        const spin = d3.select("svg#loader g g");
+        assert.equal(spin.attr("style"), "transform: rotate(90deg); animation: gros-spinner 100ms linear;");
+        done();
+    });
     it('Creates at most one spinner with same ID', (done) => {
         const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
         const loadingSpinner = new Spinner();
