@@ -26,7 +26,10 @@ describe('Spinner', () => {
         const { window, d3, Spinner } = setupPage('<div id="loader_container"></div>', done);
         const loadingSpinner = new Spinner();
         loadingSpinner.start();
-        assert.isFalse(d3.select("svg#loader").empty(), 'Spinner has SVG');
+        const spin = d3.select("svg#loader");
+        assert.isFalse(spin.empty(), 'Spinner has SVG');
+        assert.isTrue(spin.classed("gros-spinner"), 'Spinner has class');
+        assert.equal(spin.selectAll("path").size(), 2, 'Spinner has two arcs');
         done();
     });
     it('Rotates the spinner', (done) => {
