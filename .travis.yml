@@ -1,11 +1,13 @@
 language: node_js
 node_js:
-  - "8"
-  - "9"
+  - "10"
+  - "12"
 after_script:
   - sonar-scanner -Dsonar.login=$SONAR_TOKEN
 after_success:
   - npm run coveralls
+git:
+    depth: false
 addons:
     sonarcloud:
         organization: ictu-gros
