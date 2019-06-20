@@ -40,7 +40,7 @@ describe('Spinner', () => {
         });
         loadingSpinner.start();
         const spin = d3.select("svg#loader g g");
-        assert.equal(spin.attr("style"), "transform: rotate(45deg); animation: gros-spinner 1000ms linear;");
+        assert.equal(spin.attr("style"), "transform: rotate(45deg); animation: 1000ms linear infinite gros-spinner;");
         done();
     });
     it('Updates the spinner', (done) => {
@@ -55,7 +55,7 @@ describe('Spinner', () => {
         });
         loadingSpinner.start();
         const spin = d3.select("svg#loader g g");
-        assert.equal(spin.attr("style"), "transform: rotate(90deg); animation: gros-spinner 100ms linear;");
+        assert.equal(spin.attr("style"), "transform: rotate(90deg); animation: 100ms linear infinite gros-spinner;");
         done();
     });
     it('Creates at most one spinner with same ID', (done) => {
